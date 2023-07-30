@@ -1,6 +1,6 @@
 import React from 'react'
 import NavBar from '../features/navbar/Navbar'
-import { Counter } from '../features/counter/ProductList'
+import { Counter } from '../features/product-list/components/ProductList'
 
 function Home() {
   return (
