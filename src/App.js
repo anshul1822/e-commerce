@@ -10,17 +10,14 @@ import {
 } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
-import { Cart } from './features/cart/Cart';
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
-import ProductDetail from './features/product-list/components/ProductDetail';
 import ProductDetailPage from './pages/ProductDetailPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: ( <Home></Home>
-    ),
+    element: <Home></Home>,
   },
   {
     path: "/login",

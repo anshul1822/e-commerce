@@ -49,9 +49,9 @@ const products = [
   // More products...
 ];
 
-export function Cart() {
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
+export default function Cart() {
+  // const count = useSelector(selectCount);
+  // const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
 
   return (

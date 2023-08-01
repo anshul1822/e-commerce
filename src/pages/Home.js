@@ -1,11 +1,11 @@
 import React from 'react'
 import NavBar from '../features/navbar/Navbar'
-import { Counter } from '../features/product-list/components/ProductList'
+import ProductList from '../features/product/components/ProductList'
 
 function Home() {
   return (
     <NavBar>
-        <Counter/>
+        <ProductList/>
     </NavBar>
   )
 }
