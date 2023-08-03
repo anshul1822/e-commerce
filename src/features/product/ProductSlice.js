@@ -1,9 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAllProducts, fetchProductsByFilter } from './ProductAPI';
+import { fetchAllProducts, fetchProductsByFilter, fetchAllBrands, fetchAllCategories, fetchProductsById } from './ProductAPI';
+import { act } from 'react-dom/test-utils';
 
 const initialState = {
   products: [],
+  totalItems : 0,
+  brands :[],
+  categories :[],
+  selectedProduct : null,
   status: 'idle',
+  
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -33,8 +39,39 @@ export const fetchProductsAsync = createAsyncThunk(
 
 export const fetchProductsByFilterAsync = createAsyncThunk(
   'product/fetchProductsByFilter',
-  async ({filter, sort}) => {
-    const response = await fetchProductsByFilter(filter,sort);
+  async ({filter, sort, pagination}) => {
+    const response = await fetchProductsByFilter(filter,sort,pagination);
+    // The value we return becomes the `fulfilled` action payload
+    // console.log(response.data);
+    return response.data;
+  }
+);
+
+export const fetchProductsByIdAsync = createAsyncThunk(
+  'product/fetchProductsById',
+  async (id) => {
+    console.log(id)
+    const response = await fetchProductsById(id);
+    // The value we return becomes the `fulfilled` action payload
+    // console.log(response.data);
+    return response.data;
+  }
+);
+
+export const fetchBrandsAsync = createAsyncThunk(
+  'product/fetchAllBrands',
+  async () => {
+    const response = await fetchAllBrands();
+    // The value we return becomes the `fulfilled` action payload
+    // console.log(response.data);
+    return response.data;
+  }
+);
+
+export const fetchCategoriesAsync = createAsyncThunk(
+  'product/fetchAllCategories',
+  async () => {
+    const response = await fetchAllCategories();
     // The value we return becomes the `fulfilled` action payload
     // console.log(response.data);
     return response.data;
@@ -91,8 +128,37 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsByFilterAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.products = action.payload;
+        state.products = action.payload.products;
+        state.totalItems = action.payload.totalItems;
+      })
+      .addCase(fetchBrandsAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchBrandsAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        // console.log("fetchBrandsAsync", action.payload);
+        state.brands = action.payload;
+        // state.totalItems = action.payload.totalItems;
+      })
+      .addCase(fetchCategoriesAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        // console.log("fetchCategoriesAsync", action.payload);
+        state.categories = action.payload;
+        // state.totalItems = action.payload.totalItems;
+      })
+      .addCase(fetchProductsByIdAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProductsByIdAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        console.log("fetchProductsByIdAsync", action.payload);
+        state.selectedProduct = action.payload;
+        // state.totalItems = action.payload.totalItems;
       });
+
   },
 });
 
@@ -102,6 +168,10 @@ export const { increment, decrement, incrementByAmount } = productSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectAllProducts = (state) => state.product.products;
+export const selectBrands = (state) => state.product.brands;
+export const selectCategories = (state) => state.product.categories;
+export const selectTotalItems = (state) => state.product.totalItems;
+export const selectProductById = (state) => state.product.selectedProduct;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

@@ -1,0 +1,1 @@
+export const ITEMS_PER_APGE = 12;
