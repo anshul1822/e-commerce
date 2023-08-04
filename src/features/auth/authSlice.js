@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createUser, checkUser } from './authAPI';
 
 const initialState = {
-  loggedInUser : [],
+  loggedInUser : null,
   status: 'idle',
   error : null
 };

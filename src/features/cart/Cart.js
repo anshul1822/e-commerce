@@ -17,7 +17,7 @@ import {
   incrementByAmount,
   incrementAsync,
   incrementIfOdd,
-  selectCount,
+  selectCartItems,
 } from "./CartSlice";
 import { Link } from "react-router-dom";
 

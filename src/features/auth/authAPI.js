@@ -1,4 +1,3 @@
-
 export function createUser(userData) {
   return new Promise(async (resolve) => {
     console.log(userData);
@@ -16,7 +15,7 @@ export function createUser(userData) {
 
 export function checkUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
-    console.log(loginInfo);
+    // console.log(loginInfo);
     const email = loginInfo.email;
     const password = loginInfo.password;
 
