@@ -51,7 +51,7 @@ export default function ProductList() {
   const categories = useSelector(selectCategories);
   const brands = useSelector(selectBrands);
 
-  console.log(categories, brands);
+
 
   const filters = [
     {
@@ -121,7 +121,6 @@ export default function ProductList() {
 
 
 
-  console.log("filters", filters);
   const incrementValue = Number(incrementAmount) || 0;
 
   return (
