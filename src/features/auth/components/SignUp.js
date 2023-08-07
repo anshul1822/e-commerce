@@ -57,7 +57,7 @@ export function SignUp() {
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
             console.log(data);
-            dispatch(createUSerAsync({email : data.email, password : data.password}));
+            dispatch(createUSerAsync({email : data.email, password : data.password, addresses : []}));
           })}
         >
           <div>

@@ -29,9 +29,9 @@ export function updateCart(item) {
 });
 }
 
-export function deleteCart(itemId) {
+export function deleteItemsFromCart(itemId) {
   return new Promise(async (resolve) => {
-    console.log("deleteCart",itemId);
+    console.log("deleteItemsCart",itemId);
     const response = await fetch(' http://localhost:8080/cart/'+itemId,{
       method : 'DELETE',
       headers : {'content-type' : 'application/json'}
@@ -40,6 +40,22 @@ export function deleteCart(itemId) {
 
     // TODO : on server it will only retrun some info of user (not password)
     resolve({data : {id : itemId}});
+});
+}
+
+
+export async function deleteCart(userId) {
+  // get all the cart items - and then delete each item
+
+  return new Promise(async (resolve) => {
+    const response = await fetchItemsByUserId(userId);
+    const items = response.data;
+  
+    for(let item of items){
+      await deleteItemsFromCart(item.id);
+    }
+
+    resolve({status : 'success'});
 });
 }
 

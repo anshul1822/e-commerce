@@ -2338,50 +2338,241 @@
     {
       "email": "ans@gmail.com",
       "password": "T$j8dSsuU+g#_G$",
-      "id": 1
+      "id": 1,
+      "addresses": [
+        {
+          "fullname": "AS",
+          "email": "asa@gmai.com",
+          "phone": "23432",
+          "street": "Asad",
+          "city": "fdgd",
+          "state": "esd",
+          "pinCode": "1321"
+        }
+      ]
     }
   ],
-  "cart": [
+  "cart": [],
+  "orders": [
     {
-      "id": 2,
-      "title": "iPhone X",
-      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-      "price": 899,
-      "discountPercentage": 17.94,
-      "rating": 4.44,
-      "stock": 34,
-      "brand": "Apple",
-      "category": "smartphones",
-      "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/2/1.jpg",
-        "https://i.dummyjson.com/data/products/2/2.jpg",
-        "https://i.dummyjson.com/data/products/2/3.jpg",
-        "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+      "cartItems": [
+        {
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 1
+        }
       ],
-      "quantity": 1,
-      "user": 1
+      "totalAmount": 738,
+      "user": {
+        "email": "ans@gmail.com",
+        "password": "T$j8dSsuU+g#_G$",
+        "id": 1,
+        "addresses": [
+          {
+            "fullname": "AS",
+            "email": "asa@gmai.com",
+            "phone": "23432",
+            "street": "Asad",
+            "city": "fdgd",
+            "state": "esd",
+            "pinCode": "1321"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "status": "pending",
+      "id": 1
     },
     {
-      "id": 8,
-      "title": "Microsoft Surface Laptop 4",
-      "description": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.",
-      "price": 1499,
-      "discountPercentage": 10.23,
-      "rating": 4.43,
-      "stock": 68,
-      "brand": "Microsoft Surface",
-      "category": "laptops",
-      "thumbnail": "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/8/1.jpg",
-        "https://i.dummyjson.com/data/products/8/2.jpg",
-        "https://i.dummyjson.com/data/products/8/3.jpg",
-        "https://i.dummyjson.com/data/products/8/4.jpg",
-        "https://i.dummyjson.com/data/products/8/thumbnail.jpg"
+      "cartItems": [
+        {
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 1
+        }
       ],
-      "quantity": 3,
-      "user": 1
+      "totalAmount": 738,
+      "user": {
+        "email": "ans@gmail.com",
+        "password": "T$j8dSsuU+g#_G$",
+        "id": 1,
+        "addresses": [
+          {
+            "fullname": "AS",
+            "email": "asa@gmai.com",
+            "phone": "23432",
+            "street": "Asad",
+            "city": "fdgd",
+            "state": "esd",
+            "pinCode": "1321"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "status": "pending",
+      "id": 2
+    },
+    {
+      "cartItems": [
+        {
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 1
+        }
+      ],
+      "totalAmount": 738,
+      "user": {
+        "email": "ans@gmail.com",
+        "password": "T$j8dSsuU+g#_G$",
+        "id": 1,
+        "addresses": [
+          {
+            "fullname": "AS",
+            "email": "asa@gmai.com",
+            "phone": "23432",
+            "street": "Asad",
+            "city": "fdgd",
+            "state": "esd",
+            "pinCode": "1321"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "status": "pending",
+      "id": 3
+    },
+    {
+      "cartItems": [
+        {
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 2
+        }
+      ],
+      "totalAmount": 738,
+      "user": {
+        "email": "ans@gmail.com",
+        "password": "T$j8dSsuU+g#_G$",
+        "id": 1,
+        "addresses": [
+          {
+            "fullname": "AS",
+            "email": "asa@gmai.com",
+            "phone": "23432",
+            "street": "Asad",
+            "city": "fdgd",
+            "state": "esd",
+            "pinCode": "1321"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "status": "pending",
+      "id": 4
+    },
+    {
+      "cartItems": [
+        {
+          "title": "iPhone X",
+          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          "price": 899,
+          "discountPercentage": 17.94,
+          "rating": 4.44,
+          "stock": 34,
+          "brand": "Apple",
+          "category": "smartphones",
+          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 2
+        }
+      ],
+      "totalAmount": 738,
+      "user": {
+        "email": "ans@gmail.com",
+        "password": "T$j8dSsuU+g#_G$",
+        "id": 1,
+        "addresses": [
+          {
+            "fullname": "AS",
+            "email": "asa@gmai.com",
+            "phone": "23432",
+            "street": "Asad",
+            "city": "fdgd",
+            "state": "esd",
+            "pinCode": "1321"
+          }
+        ]
+      },
+      "paymentMethod": "cash",
+      "status": "pending",
+      "id": 5
     }
   ]
 }
