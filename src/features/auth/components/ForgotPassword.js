@@ -1,28 +1,15 @@
 import React, { useState, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-// import { , useState } from 'react'
 import { Link, Navigate } from "react-router-dom";
-import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+
 import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
-} from "@heroicons/react/20/solid";
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
   checkUserAsync,
   selectLoggedInUser,
   selectError,
 } from "../authSlice";
 
-export function Login() {
+export function ForgotPassword() {
   const {
     register,
     handleSubmit,
@@ -30,8 +17,6 @@ export function Login() {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState("2");
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const user = useSelector(selectLoggedInUser);
   const error = useSelector(selectError);
@@ -39,7 +24,6 @@ export function Login() {
 
   return (
     <>
-    {console.log("user", user)}
     {user && <Navigate to='/' replace={true}></Navigate>}
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -49,7 +33,7 @@ export function Login() {
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
+          Enter your email to reset password
         </h2>
       </div>
 
@@ -59,9 +43,8 @@ export function Login() {
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
             console.log(data);
-            dispatch(
-              checkUserAsync({ email: data.email, password: data.password })
-            );
+
+            // TODO : implementation on backend with email
           })}
         >
           <div>
@@ -90,66 +73,24 @@ export function Login() {
             </div>
           </div>
 
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Password
-              </label>
-              <div className="text-sm">
-                <Link
-                  to='/forgot-password'
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                {...register("password", {
-                  required: "Password is required",
-                  pattern: {
-                    value:
-                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-                    message: `- at least 8 characters\n
-                - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n
-                - Can contain special characters\n`,
-                  },
-                })}
-                type="password"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-
-              {errors.password && (
-                <p className="text-red-400">{errors.password.message}</p>
-              )}
-              {error && (
-                <p className="text-red-400">{error.message}</p>
-              )}
-            </div>
-          </div>
 
           <div>
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Send Email
             </button>
           </div>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
+        Send me back to ?{" "}
           <Link
-            to="/signup"
+            to="/login"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Create an Account
+           Login
           </Link>
         </p>
       </div>
