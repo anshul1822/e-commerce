@@ -13,10 +13,12 @@ const OrderSuccessPage = () => {
   const user = useSelector(selectLoggedInUser);
 
   useEffect(() => {
+    //clear the order
+    dispatch(deleteOrder());
+
     //clear the cart
     dispatch(deleteCartAsync(user.id));
-    //clear the order
-    dispatch(deleteOrder);
+
   },[]);
 
   return (

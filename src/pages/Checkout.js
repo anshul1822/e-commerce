@@ -6,6 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 import { selectCartItems, updateCartAsync, deleteCartAsync, fetchItemsByUserIdAsync } from "../features/cart/CartSlice";
 import { selectLoggedInUser, updateUserAsync } from "../features/auth/authSlice";
 import { addToOrderAsync, selectCurrentOrder } from "../features/order/orderSlice";
+import { selectLoggedInUserData } from "../features/user/userSlice";
 
 const products = [
   {
@@ -94,7 +95,7 @@ function Checkout() {
   
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUserData);
   const currentOrder = useSelector(selectCurrentOrder);
 
   console.log("currentORder", currentOrder);
@@ -121,9 +122,15 @@ function Checkout() {
   }
 
   const handleOrder = (e) => {
-    console.log(cartItems);
-    const order = {cartItems, totalAmount, user, paymentMethod, selectedAddress, status : 'pending'}; //other can be delivered received
-    dispatch(addToOrderAsync(order));
+    if(selectedAddress){
+      console.log(cartItems);
+      const order = {cartItems, totalAmount, user, paymentMethod, selectedAddress, status : 'pending'}; //other can be delivered received
+      dispatch(addToOrderAsync(order));
+    }
+  else{
+    alert('Please select a address');
+  }
+
 
     //TODO : redirect to order-success page
     //TODO : clear cart after order
@@ -132,6 +139,7 @@ function Checkout() {
 
   useEffect(()=>{
     dispatch(fetchItemsByUserIdAsync(user.id))
+    // selectedAddress(user.addresses[0])
   },[dispatch])
 
   const {
@@ -156,11 +164,13 @@ function Checkout() {
           <form
             noValidate
             onSubmit={handleSubmit((data) => {
-              console.log(data);
-              dispatch(
-                updateUserAsync({...user, addresses : [...user.addresses, data] })
-              )
-              reset();
+              //console.log(data);
+              console.log("selected Address: ", selectedAddress);
+                dispatch(
+                  updateUserAsync({...user, addresses : [...user.addresses, data] })
+                );  
+                reset();
+              
             })}
           > 
             <h2 className="text-2xl font-semibold leading-7 text-gry-900">Personal Information</h2>
@@ -176,7 +186,7 @@ function Checkout() {
               <div className="mt-2">
                 <input
                   type="text"
-                  {...register("fullname", {
+                  {...register("name", {
                     required: 'name is required',
                     pattern:{
                       value : /^(([A-Za-z]+)(\s[A-Za-z]+)?)$/gm,
@@ -325,7 +335,7 @@ function Checkout() {
                 Choose from existing Address
               </p>
               <ul role="list" className="divide-y divide-gray-100" >
-              <li
+              {/* <li
                     key={person[0].email}
                     className="flex justify-between gap-x-6 py-5"
                   >
@@ -372,7 +382,7 @@ function Checkout() {
                         </div>
                       )}
                     </div>
-                  </li>                
+                  </li>                 */}
                 {user.addresses?.map((person, index) => (
                   <li
                     key={person.email}
@@ -531,7 +541,7 @@ function Checkout() {
                   <div className="flex flex-1 items-end justify-between text-sm">
                     <div className="text-gray-500">
                       Qty{" "}
-                      <select onChange={(e) => handleQuantity(e, product)} value={product.quantity}>
+                      <select class="w-24 !appearance-none" onChange={(e) => handleQuantity(e, product)} value={product.quantity}>
                         <option value="1">1 </option>
                         <option value="2">2 </option>
                         <option value="3">3 </option>

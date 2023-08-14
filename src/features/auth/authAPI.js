@@ -13,20 +13,7 @@ export function createUser(userData) {
 });
 }
 
-export function updateUser(update) {
-  return new Promise(async (resolve) => {
-    console.log(update);
-    const response = await fetch(' http://localhost:8080/users/' + update.id, {
-      method : 'PUT',
-      body : JSON.stringify(update),
-      headers : {'content-type' : 'application/json'}
-    })  
 
-    const data = await response.json();
-    // TODO : on server it will only retrun some info of user (not password)
-    resolve({data});
-});
-}
 
 export function checkUser(loginInfo) {
   return new Promise(async (resolve, reject) => {

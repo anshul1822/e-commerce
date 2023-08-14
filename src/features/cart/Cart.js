@@ -47,13 +47,13 @@ export default function Cart() {
     <>
     {!cartItems.length && <Navigate to='/login' replace={true}></Navigate>}
 
-    <div className="mx-auto bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h1 className="text-2xl font-bold tracking-tight text-gray-900">Cart</h1>
+    <div className="mx-auto my-5 bg-white max-w-7xl p-4 sm:px-6 lg:px-8">
+      <h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">Cart</h1>
       <div className="mt-4">
         <div className="flow-root">
           <ul role="list" className="-my-6 divide-y divide-gray-200">
             {cartItems.map((product) => (
-              <li key={product.id} className="flex py-6">
+              <li key={product.id} className="flex py-6 my-4">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
                     src={product.thumbnail}
@@ -87,15 +87,16 @@ export default function Cart() {
                     </p>
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">
-                    <div className="text-gray-500">
-                      Qty{" "}
-                      <select onChange={(e) => handleQuantity(e, product)} value={product.quantity}>
+                    <div className="flex w-32 items-center justify-between text-gray-500 ">
+                      Qty: {" "} 
+                      <select value={product.quantity} onChange={(e) => handleQuantity(e, product)} 
+                      className="!appearance-none  w-20 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="1">1 </option>
                         <option value="2">2 </option>
                         <option value="3">3 </option>
                         <option value="4">4 </option>
                         <option value="5">5 </option>
-                      </select>{" "}
+                      </select>
                     </div>
 
                     <div className="flex">

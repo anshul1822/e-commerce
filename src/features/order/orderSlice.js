@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { addToOrder } from './orderAPI';
 
 const initialState = {
@@ -38,6 +38,7 @@ export const orderSlice = createSlice({
       state.value += 1;
     },
     deleteOrder : (state) => {
+      console.log("state.currentOrder: ", state.currentOrder);
         state.currentOrder = null;
     }
   },
