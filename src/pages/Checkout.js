@@ -98,7 +98,7 @@ function Checkout() {
   const user = useSelector(selectLoggedInUserData);
   const currentOrder = useSelector(selectCurrentOrder);
 
-  console.log("currentORder", currentOrder);
+  // console.log("currentORder", currentOrder);
 
   const totalAmount = cartItems.reduce((amount, item) => Math.round(item.price * (1 - item.discountPercentage / 100)) * item.quantity + amount, 0)
   const totalItems = cartItems.reduce((amount, item) => item.quantity + amount, 0)

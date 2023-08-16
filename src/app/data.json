@@ -89,22 +89,23 @@
       ]
     },
     {
-      "id": 6,
       "title": "MacBook Pro",
       "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
-      "price": 1749,
+      "price": 2149,
       "discountPercentage": 11.02,
-      "rating": 4.57,
       "stock": 83,
       "brand": "Apple",
       "category": "laptops",
       "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
+      "dicountPercentage": null,
       "images": [
         "https://i.dummyjson.com/data/products/6/1.png",
         "https://i.dummyjson.com/data/products/6/2.jpg",
         "https://i.dummyjson.com/data/products/6/3.png",
-        "https://i.dummyjson.com/data/products/6/4.jpg"
-      ]
+        "https://i.dummyjson.com/data/products/6/4.jpg",
+        "https://i.dummyjson.com/data/products/6/thumbnail.png"
+      ],
+      "id": 6
     },
     {
       "id": 7,
@@ -125,23 +126,24 @@
       ]
     },
     {
-      "id": 8,
       "title": "Microsoft Surface Laptop 4",
       "description": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.",
-      "price": 1499,
+      "price": 1999,
       "discountPercentage": 10.23,
-      "rating": 4.43,
       "stock": 68,
       "brand": "Microsoft Surface",
       "category": "laptops",
       "thumbnail": "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
+      "rating": 0,
+      "dicountPercentage": null,
       "images": [
         "https://i.dummyjson.com/data/products/8/1.jpg",
         "https://i.dummyjson.com/data/products/8/2.jpg",
         "https://i.dummyjson.com/data/products/8/3.jpg",
         "https://i.dummyjson.com/data/products/8/4.jpg",
         "https://i.dummyjson.com/data/products/8/thumbnail.jpg"
-      ]
+      ],
+      "id": 8
     },
     {
       "id": 9,
@@ -181,22 +183,25 @@
       ]
     },
     {
-      "id": 11,
       "title": "perfume Oil",
       "description": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
-      "price": 13,
+      "price": 23,
       "discountPercentage": 8.4,
-      "rating": 4.26,
       "stock": 65,
       "brand": "Impression of Acqua Di Gio",
       "category": "fragrances",
       "thumbnail": "https://i.dummyjson.com/data/products/11/thumbnail.jpg",
+      "dicountPercentage": null,
       "images": [
         "https://i.dummyjson.com/data/products/11/1.jpg",
         "https://i.dummyjson.com/data/products/11/2.jpg",
         "https://i.dummyjson.com/data/products/11/3.jpg",
+        "https://i.dummyjson.com/data/products/11/thumbnail.jpg",
         "https://i.dummyjson.com/data/products/11/thumbnail.jpg"
-      ]
+      ],
+      "id": 11,
+      "rating": 4.26,
+      "deleted": true
     },
     {
       "id": 12,
@@ -1838,6 +1843,25 @@
         "https://i.dummyjson.com/data/products/100/3.jpg",
         "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
       ]
+    },
+    {
+      "title": "MacBookPro",
+      "description": "M",
+      "price": "10000",
+      "discountPercentage": "3",
+      "stock": "83",
+      "brand": "Apple",
+      "category": "laptops",
+      "thumbnail": "https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        "https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        "https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        "https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        "https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+      ],
+      "rating": 0,
+      "id": 101
     }
   ],
   "brands": [
@@ -2339,6 +2363,7 @@
       "email": "ans@gmail.com",
       "password": "T$j8dSsuU+g#_G$",
       "id": 1,
+      "role": "user",
       "addresses": [
         {
           "fullname": "AS",
@@ -2363,23 +2388,27 @@
     {
       "email": "anshul@email.com",
       "password": "3PRbKVe*x$7ba",
-      "id": 2
+      "id": 2,
+      "role": "user"
     },
     {
       "email": "anz@gam.com",
       "password": "Gn3J66Rs@#u.g",
+      "role": "user",
       "id": 3
     },
     {
       "name": "WEqwqa",
       "email": "qw@12.cpm",
       "password": "nAifx7!8@mJdK",
+      "role": "user",
       "id": 4
     },
     {
       "name": "Bdfsfs",
       "email": "VG@fas.com",
       "password": "!$4fMzYHv5R6U",
+      "role": "admin",
       "addresses": [
         {
           "name": "Anshul Sinha",
@@ -2442,6 +2471,28 @@
       "quantity": 2,
       "user": 4,
       "id": 2
+    },
+    {
+      "title": "Infinix INBOOK",
+      "description": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
+      "price": 1099,
+      "discountPercentage": 11.83,
+      "rating": 4.54,
+      "stock": 96,
+      "brand": "Infinix",
+      "category": "laptops",
+      "thumbnail": "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+      "images": [
+        "https://i.dummyjson.com/data/products/9/1.jpg",
+        "https://i.dummyjson.com/data/products/9/2.png",
+        "https://i.dummyjson.com/data/products/9/3.png",
+        "https://i.dummyjson.com/data/products/9/4.jpg",
+        "https://i.dummyjson.com/data/products/9/thumbnail.jpg"
+      ],
+      "productId": 9,
+      "quantity": 3,
+      "user": 5,
+      "id": 3
     }
   ],
   "orders": [
@@ -2486,7 +2537,7 @@
         ]
       },
       "paymentMethod": "cash",
-      "status": "pending",
+      "status": "dispatched",
       "id": 1
     },
     {
@@ -2530,7 +2581,7 @@
         ]
       },
       "paymentMethod": "cash",
-      "status": "pending",
+      "status": "delivered",
       "id": 2
     },
     {
@@ -2574,7 +2625,7 @@
         ]
       },
       "paymentMethod": "cash",
-      "status": "pending",
+      "status": "cancelled",
       "id": 3
     },
     {
@@ -2980,6 +3031,27 @@
           "quantity": 1,
           "user": 5,
           "id": 3
+        },
+        {
+          "title": "women's shoes",
+          "description": "Close: Lace, Style with bottom: Increased inside, Sole Material: Rubber",
+          "price": 40,
+          "discountPercentage": 16.96,
+          "rating": 4.14,
+          "stock": 72,
+          "brand": "IELGY fashion",
+          "category": "womens-shoes",
+          "thumbnail": "https://i.dummyjson.com/data/products/46/thumbnail.jpg",
+          "images": [
+            "https://i.dummyjson.com/data/products/46/1.webp",
+            "https://i.dummyjson.com/data/products/46/2.jpg",
+            "https://i.dummyjson.com/data/products/46/3.jpg",
+            "https://i.dummyjson.com/data/products/46/4.jpg",
+            "https://i.dummyjson.com/data/products/46/thumbnail.jpg"
+          ],
+          "quantity": 1,
+          "user": 5,
+          "id": 3
         }
       ],
       "totalAmount": 788,
@@ -3020,7 +3092,7 @@
         "state": "Himachal",
         "pinCode": "222444"
       },
-      "status": "pending",
+      "status": "dispatched",
       "id": 12
     }
   ]

@@ -1,1 +1,1 @@
-export const ITEMS_PER_APGE = 12;
+export const ITEMS_PER_APGE = 9;

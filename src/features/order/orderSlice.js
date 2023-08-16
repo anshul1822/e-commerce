@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
-import { addToOrder } from './orderAPI';
+import { addToOrder, fetchAllOrders, updateOrder } from './orderAPI';
 
 const initialState = {
   orders: [],
+  totalOrders : 0,
   status: 'idle',
   currentOrder : null,
   error : null
@@ -18,6 +19,25 @@ export const addToOrderAsync = createAsyncThunk(
   async (orderItem) => {
     console.log("orderItem", orderItem);
     const response = await addToOrder(orderItem);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const updateOrderAsync = createAsyncThunk(
+  'order/updateOrder',
+  async (orderItem) => {
+    console.log("orderItem", orderItem);
+    const response = await updateOrder(orderItem);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const fetchAllOrdersAsync = createAsyncThunk(
+  'order/fetchAllOrders',
+  async ({sort, pagination}) => {
+    const response = await fetchAllOrders(sort, pagination);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -53,9 +73,25 @@ export const orderSlice = createSlice({
         state.status = 'idle';
         state.orders.push(action.payload);
         // console.log("currentORder")
-        state.currentOrder = action.payload;
-        
+        state.currentOrder = action.payload;        
       })
+      .addCase(fetchAllOrdersAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllOrdersAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        // console.log(action.payload);
+        state.orders = action.payload.orders;
+        state.totalOrders = action.payload.totalOrders;       
+      })      
+      .addCase(updateOrderAsync.pending, (state, action) => {
+        state.status = 'loading';
+      }).
+      addCase(updateOrderAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        const index = state.orders.findIndex(item => item.id == action.payload.id)
+        state.orders[index] = action.payload;
+      });
       ;
   },
 });
@@ -66,7 +102,9 @@ export const { increment, deleteOrder } = orderSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 // export const selectCount = (state) => state.counter.value;
+// export const selectAllOrderedItems = (state) => state.order.allOrders;
 export const selectOrderedItems = (state) => state.order.orders;
+export const selectTotalNoofOrders = (state) => state.order.totalOrders;
 export const selectCurrentOrder = (state) => state.order.currentOrder;
 
 // We can also write thunks by hand, which may contain both sync and async logic.

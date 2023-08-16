@@ -2,43 +2,10 @@ import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsByIdAsync, selectProductById } from '../ProductSlice';
+import { fetchProductsByIdAsync, selectProductById } from '../../product/ProductSlice';
 import { useParams } from 'react-router-dom';
-import { addToCartAsync, selectCartItems } from '../../cart/CartSlice';
+import { addToCartAsync } from '../../cart/CartSlice';
 import { selectLoggedInUser } from '../../auth/authSlice';
-
-// const product = {
-//   name: 'Basic Tee 6-Pack',
-//   price: '$192',
-//   href: '#',
-//   breadcrumbs: [
-//     { id: 1, name: 'Men', href: '#' },
-//     { id: 2, name: 'Clothing', href: '#' },
-//   ],
-//   images: [
-//     {
-//       src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-//       alt: 'Two each of gray, white, and black shirts laying flat.',
-//     },
-//     {
-//       src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-//       alt: 'Model wearing plain black basic tee.',
-//     },
-//     {
-//       src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-//       alt: 'Model wearing plain gray basic tee.',
-//     },
-//     {
-//       src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-//       alt: 'Model wearing plain white basic tee.',
-//     },
-//   ],
-//   description:
-//     'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-
-//   details:
-//     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-// }
 
 
 const colors = [
@@ -71,14 +38,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductDetail() {
+export default function AdminProductDetail() {
   const dispatch = useDispatch();
   const params = useParams();
   // console.log(params.id);
 
   const product = useSelector(selectProductById);
   const user = useSelector(selectLoggedInUser);
-  const cartItems = useSelector(selectCartItems);
   // console.log(user);
 
   const [selectedColor, setSelectedColor] = useState(colors[0])
@@ -86,16 +52,9 @@ export default function ProductDetail() {
 
   const handleCart = (e) => {
     e.preventDefault();
-    if(cartItems.findIndex(cartItem => cartItem.productId == product.id) < 0){
-      const newItem = {...product, productId : product.id, quantity:1, user:user.id};
-      delete newItem['id'];
-      dispatch(addToCartAsync(newItem));
-    }else{
-      console.log('product already added');
-    }
-    // const newItem = {...product, quantity:1, user:user.id};
-    // delete newItem['id'];
-    // dispatch(addToCartAsync(newItem));
+    const newItem = {...product, quantity:1, user:user.id};
+    delete newItem['id'];
+    dispatch(addToCartAsync(newItem));
   }
 
   useEffect(()=>{

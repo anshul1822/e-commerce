@@ -1,6 +1,7 @@
 // A mock function to mimic making an async request for data
 export function fetchAllProducts() {
   return new Promise(async (resolve) => {
+    // TODO : Server will filter the deleted products
     const response = await fetch("http://localhost:8080/products");
     const data = await response.json();
 
@@ -18,11 +19,43 @@ export function fetchProductsById(id) {
 });
 }
 
+export function createProduct(product) {
+  return new Promise(async (resolve) => {
+    console.log(product);
+    const response = await fetch(' http://localhost:8080/products', {
+      method : 'POST',
+      body : JSON.stringify(product),
+      headers : {'content-type' : 'application/json'}
+    })  
+
+    const data = await response.json();
+    // TODO : on server it will only retrun some info of user (not password)
+    resolve({data});
+});
+}
+
+export function updateProduct(product) {
+  return new Promise(async (resolve) => {
+
+    const response = await fetch(' http://localhost:8080/products/' + product.id, {
+      method : 'PUT',
+      body : JSON.stringify(product),
+      headers : {'content-type' : 'application/json'}
+    })  
+
+    const data = await response.json();
+    // TODO : on server it will only retrun some info of user (not password)
+    resolve({data});
+});
+}
+
+
 export function fetchProductsByFilter(filter, sort, pagination) {
   //filter = {"category" : ["smartphone", "laptops"]}
   //sort = {_sort : "price", _order : "desc"}
   //pagination = {_page:1, _limit=10} // _page=1&_limit=10
   // TODO : multiple categories support on server
+  // TODO : Server will filter the deleted products
 
   let queryString = '';
   for(let key in filter){
