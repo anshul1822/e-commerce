@@ -175,6 +175,7 @@ export const productSlice = createSlice({
         state.status = 'idle';
         const index = state.products.findIndex(item => item.id == action.payload.id)
         state.products[index] = action.payload;
+        state.selectedProduct = action.payload;
       });
 
 
@@ -191,6 +192,7 @@ export const selectBrands = (state) => state.product.brands;
 export const selectCategories = (state) => state.product.categories;
 export const selectTotalItems = (state) => state.product.totalItems;
 export const selectProductById = (state) => state.product.selectedProduct;
+export const selectProductStatus = (state) => state.product.status;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

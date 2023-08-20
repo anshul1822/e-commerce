@@ -13,6 +13,7 @@ import {
   selectBrands,
   fetchBrandsAsync,
   fetchCategoriesAsync,
+  selectProductStatus,
 } from "../ProductSlice";
 import {
   ChevronDownIcon,
@@ -24,6 +25,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ITEMS_PER_APGE } from "../../../app/constants";
+import { InfinitySpin } from  'react-loader-spinner'
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -50,6 +52,7 @@ export default function ProductList() {
   const totalItems = useSelector(selectTotalItems);
   const categories = useSelector(selectCategories);
   const brands = useSelector(selectBrands);
+  const status = useSelector(selectProductStatus)
 
 
 
@@ -126,6 +129,7 @@ export default function ProductList() {
 
   return (
     <div className="bg-white">
+
       <div>
         {/* Mobile filter dialog */}
         <MobileFilter
@@ -136,7 +140,7 @@ export default function ProductList() {
         />
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-4">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               New Arrivals
             </h1>
@@ -219,7 +223,7 @@ export default function ProductList() {
               />
 
               {/* Product grid */}
-              <ProductGrid products={products} />
+              <ProductGrid products={products} status={status}/>
             </div>
           </section>
         </main>
@@ -437,15 +441,20 @@ function DesktopFilter({ subCategories, handleFilter, filters }) {
   );
 }
 
-function ProductGrid({ products }) {
+function ProductGrid({ products, status }) {
   return (
     <>
       <div className="lg:col-span-3">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl px-4 pt-2 pb-6 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 lg:pt-2">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Customers also purchased
           </h2>
-
+          {
+        status === 'loading' ?       <InfinitySpin 
+        width='200'
+        color="#4fa94d"
+      /> : null
+      }
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
               <div key={product.id} className="group relative">

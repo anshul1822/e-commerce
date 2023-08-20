@@ -6,6 +6,7 @@ import { fetchProductsByIdAsync, selectProductById } from '../ProductSlice';
 import { useParams } from 'react-router-dom';
 import { addToCartAsync, selectCartItems } from '../../cart/CartSlice';
 import { selectLoggedInUser } from '../../auth/authSlice';
+import { useAlert } from "react-alert";
 
 // const product = {
 //   name: 'Basic Tee 6-Pack',
@@ -74,6 +75,7 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const dispatch = useDispatch();
   const params = useParams();
+  const alert = useAlert();
   // console.log(params.id);
 
   const product = useSelector(selectProductById);
@@ -90,8 +92,13 @@ export default function ProductDetail() {
       const newItem = {...product, productId : product.id, quantity:1, user:user.id};
       delete newItem['id'];
       dispatch(addToCartAsync(newItem));
+
+      //TODO : it will be based on server response of backend
+      
+      alert.success("Item Added Successfully");
     }else{
       console.log('product already added');
+      alert.info("Item already added");
     }
     // const newItem = {...product, quantity:1, user:user.id};
     // delete newItem['id'];

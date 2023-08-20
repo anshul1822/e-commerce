@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../cart/CartSlice";
 import { selectLoggedInUser } from "../auth/authSlice";
+import logo from '../../assets/logo.png';
 
 
 const navigation = [
@@ -42,8 +43,8 @@ export default function NavBar({ children }) {
                     <div className="flex-shrink-0">
                       <Link to="/">
                         <img
-                          className="h-8 w-8"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                          className="h-12 w-12"
+                          src={logo}
                           alt="Your Company"
                         />
                       </Link>

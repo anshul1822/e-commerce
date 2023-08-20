@@ -9,6 +9,8 @@ import {
   Link,
 } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import CartPage from './pages/CartPage';
@@ -101,15 +103,17 @@ const router = createBrowserRouter([
   },
 ]);
 
+const options = {
+  timeout: 1000,
+  position: positions.BOTTOM_CENTER
+};
 
 function App() {
 
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
 
-  useEffect(()=>{
-
-    
+  useEffect(()=>{    
     
     if(user){
       console.log("user.id", user?.id);
@@ -120,7 +124,8 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <Provider template={AlertTemplate} {...options}><RouterProvider router={router} /></Provider>
+      
     </div>
   );
 }
