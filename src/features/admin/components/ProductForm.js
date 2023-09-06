@@ -46,13 +46,13 @@ export default function ProductForm() {
       product.image1,
       product.image2,
       product.image3,
-      product.image4,
       product.thumbnail,
     ];
     delete product["image1"];
     delete product["image2"];
     delete product["image3"];
-    delete product["image4"];
+
+    console.log("handle product", product);
 
     // add this object
     if (params.id) {

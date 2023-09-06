@@ -30,6 +30,7 @@ function classNames(...classes) {
 export default function NavBar({ children }) {
   const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser);
+  console.log(user);
 
   return (
     <>

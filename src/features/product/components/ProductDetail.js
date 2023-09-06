@@ -4,7 +4,7 @@ import { RadioGroup } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByIdAsync, selectProductById } from '../ProductSlice';
 import { useParams } from 'react-router-dom';
-import { addToCartAsync, selectCartItems } from '../../cart/CartSlice';
+import { addToCartAsync, fetchItemsByUserIdAsync, selectCartItems } from '../../cart/CartSlice';
 import { selectLoggedInUser } from '../../auth/authSlice';
 import { useAlert } from "react-alert";
 
@@ -79,26 +79,38 @@ export default function ProductDetail() {
   // console.log(params.id);
 
   const product = useSelector(selectProductById);
+  // console.log("product details product", product);
   const user = useSelector(selectLoggedInUser);
   const cartItems = useSelector(selectCartItems);
+  console.log("product details cartItems", cartItems);
   // console.log(user);
 
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  const handleCart = (e) => {
+  const handleCart = async(e) => {
     e.preventDefault();
-    if(cartItems.findIndex(cartItem => cartItem.productId == product.id) < 0){
-      const newItem = {...product, productId : product.id, quantity:1, user:user.id};
-      delete newItem['id'];
-      dispatch(addToCartAsync(newItem));
 
-      //TODO : it will be based on server response of backend
-      
+    //to prevent multiple clicks
+    if(isAddingToCart) return;
+
+    setIsAddingToCart(true);
+
+    if(cartItems.findIndex(cartItem => cartItem.product?.id == product.id) < 0){
+      const newItem = {product : product.id, quantity:1, user:user.id};
+      console.log("newItem at Product Details", newItem);
+      dispatch(addToCartAsync(newItem));
+      console.log("Product Detail");
+      dispatch(fetchItemsByUserIdAsync(user.id));
+      setIsAddingToCart(false);
+
+      //TODO : it will be based on server response of backend      
       alert.success("Item Added Successfully");
     }else{
       console.log('product already added');
       alert.info("Item already added");
+      setIsAddingToCart(false);
     }
     // const newItem = {...product, quantity:1, user:user.id};
     // delete newItem['id'];
@@ -107,7 +119,9 @@ export default function ProductDetail() {
 
   useEffect(()=>{
     dispatch(fetchProductsByIdAsync(params.id));
+    
   },[dispatch, params.id]);
+
 
 
   //TODO : IN server data we will add colors, sizes , highlights

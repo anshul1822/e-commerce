@@ -95,17 +95,19 @@ function Checkout() {
   
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
-  const user = useSelector(selectLoggedInUserData);
+  // console.log("cartItems at checkout page", cartItems);
+  const user = useSelector(selectLoggedInUser);
+  // console.log("user at checkout page", user);
   const currentOrder = useSelector(selectCurrentOrder);
 
-  // console.log("currentORder", currentOrder);
+  console.log("currentOrder at checkout", currentOrder);
 
-  const totalAmount = cartItems.reduce((amount, item) => Math.round(item.price * (1 - item.discountPercentage / 100)) * item.quantity + amount, 0)
+  const totalAmount = cartItems.reduce((amount, item) => Math.round(item.product.price * (1 - item.product.discountPercentage / 100)) * item.quantity + amount, 0)
   const totalItems = cartItems.reduce((amount, item) => item.quantity + amount, 0)
 
   const handleQuantity = (e, item) => {
     // e.preventDefault();
-    dispatch(updateCartAsync({...item, quantity : +e.target.value}));
+    dispatch(updateCartAsync({item : item.id, quantity : +e.target.value}));
   }
 
   const handleDelete = (e, itemId) => {
@@ -123,8 +125,9 @@ function Checkout() {
 
   const handleOrder = (e) => {
     if(selectedAddress){
-      console.log(cartItems);
-      const order = {cartItems, totalAmount, user, paymentMethod, selectedAddress, status : 'pending'}; //other can be delivered received
+      // console.log(cartItems);
+      const userId = user.id;
+      const order = {items : cartItems  , totalItems, totalAmount, user : userId, paymentMethod, selectedAddress, status : 'pending'}; //other can be delivered received
       dispatch(addToOrderAsync(order));
     }
   else{
@@ -138,6 +141,7 @@ function Checkout() {
   }
 
   useEffect(()=>{
+    console.log("Checkout");
     dispatch(fetchItemsByUserIdAsync(user.id))
     // selectedAddress(user.addresses[0])
   },[dispatch])
@@ -157,7 +161,7 @@ function Checkout() {
   return (
     <>
     {!cartItems.length && <Navigate to='/login' replace={true}></Navigate>}
-    {currentOrder && <Navigate to={`/order-success/:${currentOrder.id}`} replace={true}></Navigate>}
+    {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 mt-10  gap-x-8 gap-y-10 lg:grid-cols-5">
         <div className="lg:col-span-3 bg-white px-4 py-6">
@@ -383,7 +387,7 @@ function Checkout() {
                       )}
                     </div>
                   </li>                 */}
-                {user.addresses?.map((person, index) => (
+                {user?.addresses?.map((person, index) => (
                   <li
                     key={person.email}
                     className="flex justify-between gap-x-6 py-5"
@@ -505,11 +509,11 @@ function Checkout() {
               <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
             {cartItems.map((product) => (
-              <li key={product.id} className="flex py-6">
+              <li key={product.product.id} className="flex py-6">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                   <img
-                    src={product.thumbnail}
-                    alt={product.title}
+                    src={product.product.thumbnail}
+                    alt={product.product.title}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
@@ -518,18 +522,18 @@ function Checkout() {
                   <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <h3>
-                        <a href={product.href}>{product.title}</a>
+                        <a href={product.product.href}>{product.product.title}</a>
                       </h3>
                       <span>
                         {" "}
                         <p className="text-sm font-medium text-gray-400 line-through">
-                          ${product.price}
+                          ${product.product.price}
                         </p>
                         <p className="text-sm font-medium text-gray-900">
                           $
                           {Math.round(
-                            product.price *
-                              (1 - product.discountPercentage / 100)
+                            product.product.price *
+                              (1 - product.product.discountPercentage / 100)
                           )}
                         </p>
                       </span>
@@ -541,7 +545,7 @@ function Checkout() {
                   <div className="flex flex-1 items-end justify-between text-sm">
                     <div className="text-gray-500">
                       Qty{" "}
-                      <select class="w-24 !appearance-none" onChange={(e) => handleQuantity(e, product)} value={product.quantity}>
+                      <select className="w-24 !appearance-none" onChange={(e) => handleQuantity(e, product)} value={product.quantity}>
                         <option value="1">1 </option>
                         <option value="2">2 </option>
                         <option value="3">3 </option>
@@ -553,7 +557,7 @@ function Checkout() {
                     <div className="flex">
                       <button
                         type="button"
-                        onClick={(e) => handleDelete(e, product.id)}
+                        onClick={(e) => handleDelete(e, product.product.id)}
                         className="font-medium text-indigo-600 hover:text-indigo-500"
                       >
                         Remove

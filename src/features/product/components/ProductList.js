@@ -79,6 +79,7 @@ export default function ProductList() {
     // e.preventDefault();
 
     const newFilter = { ...filter };
+    // console.log("newFilter", newFilter);
 
     if (e.target.checked) {
       if (newFilter[section.id]) {

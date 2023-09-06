@@ -10,11 +10,11 @@ export function fetchAllProducts() {
 }
 
 export function fetchProductsById(id) {
-  console.log(id, "id");
+  // console.log(id, "id");
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/products/"+id);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     resolve({data});
 });
 }

@@ -1,4 +1,4 @@
-export function fetchLoggedInUser(userId){
+export function fetchLoggedInUserData(userId){
 
     return new Promise(async(resolve) => {
 
@@ -12,8 +12,10 @@ export function fetchLoggedInUser(userId){
 export function fetchLoggedInUserOrders(userId){
 
     return new Promise(async(resolve) => {
+        
+        console.log("fetchLoggedInUserOrders user", userId);
 
-        const response = await fetch('http://localhost:8080/orders/?user.id=' + userId)
+        const response = await fetch('http://localhost:8080/orders/' + userId)
         const data = await response.json();
 
         resolve({data});

@@ -116,7 +116,7 @@ function App() {
   useEffect(()=>{    
     
     if(user){
-      console.log("user.id", user?.id);
+      // console.log("user.id", user?.id);
       dispatch(fetchItemsByUserIdAsync(user.id));
     } //only dispatch if the user is logged in.
 

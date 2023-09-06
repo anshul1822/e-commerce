@@ -18,6 +18,8 @@ const AdminOrders = () => {
   const orders = useSelector(selectOrderedItems);
   const totalOrders = useSelector(selectTotalNoofOrders);
 
+  console.log("orders", orders);
+
   const handlePage = (page) => {
     setPage(page);
   };
@@ -207,7 +209,7 @@ const AdminOrders = () => {
                     </div>
                   </td>
                 </tr> */}
-                {orders.map((order, index) => {
+                {orders && orders.map((order, index) => {
                   return (
                     <tr
                       className="border-b border-gray-200 hover:bg-gray-100"
@@ -237,22 +239,22 @@ const AdminOrders = () => {
                         <div className="flex items-center">
                           <div className="mr-2"></div>
                           <div>
-                            {order.cartItems.map((item, index) => {
+                            {order.items.map((item, index) => {
                               return (
                                 <>
                                   <div className="flex flex-col gap-2 m-1">
-                                    <div>{item.title}</div>
+                                    <div>{item?.product?.title}</div>
 
                                     <div className="flex gap-1">
                                       <img
-                                        class="w-6 h-6 rounded-full"
-                                        src={item.thumbnail}
+                                        className="w-6 h-6 rounded-full"
+                                        src={item?.product?.thumbnail}
                                       />
                                       {" | "}
                                       Price - $
                                       {Math.round(
-                                        item.price *
-                                          (1 - item.discountPercentage / 100)
+                                        item.product?.price *
+                                          (1 - item?.product?.discountPercentage / 100)
                                       )}
                                       {" | "}
                                       Qty - {item.quantity}

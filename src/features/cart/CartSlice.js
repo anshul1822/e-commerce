@@ -14,9 +14,9 @@ const initialState = {
 // typically used to make async requests.
 export const addToCartAsync = createAsyncThunk(
   'cart/addToCart',
-  async (cartItems) => {
-    console.log("cartItems", cartItems);
-    const response = await addToCart(cartItems);
+  async (product) => {
+    console.log("addToCart", product);
+    const response = await addToCart(product);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -24,7 +24,7 @@ export const addToCartAsync = createAsyncThunk(
 
 export const updateCartAsync = createAsyncThunk(
   'cart/updateCart',
-  async (item) => {
+  async ({item}) => {
     console.log("updateCart", item);
     const response = await updateCart(item);
     // The value we return becomes the `fulfilled` action payload
@@ -34,9 +34,9 @@ export const updateCartAsync = createAsyncThunk(
 
 export const deleteItemsFromCartAsync = createAsyncThunk(
   'cart/deleteItemsFromCart',
-  async (itemId) => {
-    //console.log("updateCart", itemId);
-    const response = await deleteItemsFromCart(itemId);
+  async ({itemId, userId}) => {
+    // console.log("deleteItemsFromCart", itemId, userId);
+    const response = await deleteItemsFromCart(itemId, userId);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -55,7 +55,6 @@ export const deleteCartAsync = createAsyncThunk(
 export const fetchItemsByUserIdAsync = createAsyncThunk(
   'cart/fetchItemsByUserId',
   async (userId) => {
-    console.log("cartItems", userId);
     const response = await fetchItemsByUserId(userId);
     // The value we return becomes the `fulfilled` action payload
     return response.data;

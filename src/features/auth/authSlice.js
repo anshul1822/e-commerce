@@ -3,7 +3,7 @@ import { createUser, checkUser, signOut } from './authAPI';
 import {updateUser} from '../user/userAPI';
 
 const initialState = {
-  loggedInUser : null,
+  loggedInUser : null,  // TODO : We want to store only id here, and move other details about user in userSlice
   status: 'idle',
   error : null
 };
@@ -35,10 +35,16 @@ export const updateUserAsync = createAsyncThunk(
 
 export const checkUserAsync = createAsyncThunk(
   'auth/checkUser',
-  async (loginInfo) => {
-    const response = await checkUser(loginInfo);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
+  async (loginInfo, {rejectWithValue}) => {
+
+    try{
+      const response = await checkUser(loginInfo);
+      // The value we return becomes the `fulfilled` action payload
+      return response.data;
+    }catch(err){
+      // console.log(err);
+      return rejectWithValue(err);
+    }
   }
 );
 
@@ -91,7 +97,7 @@ export const authSlice = createSlice({
       })
       .addCase(checkUserAsync.rejected, (state, action) => {
         state.status = 'idle';
-        state.error = action.error;
+        state.error = action.payload;
       })
       .addCase(updateUserAsync.pending, (state) => {
         state.status = 'loading';
