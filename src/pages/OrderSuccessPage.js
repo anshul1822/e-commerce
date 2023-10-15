@@ -4,14 +4,14 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartAsync } from "../features/cart/CartSlice";
-import { selectLoggedInUser } from "../features/auth/authSlice";
+import { selectLoggedInUserToken } from "../features/auth/authSlice";
 import { deleteOrder, selectCurrentOrder } from "../features/order/orderSlice";
 import { useState } from "react";
 
 const OrderSuccessPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUserToken);
   const currrentOrder = useSelector(selectCurrentOrder);
   const [order, setOrder] = useState();
 
@@ -23,7 +23,7 @@ const OrderSuccessPage = () => {
     dispatch(deleteOrder());
 
     //clear the cart
-    dispatch(deleteCartAsync(user.id));
+    dispatch(deleteCartAsync());
   }, []);
 
   // console.log("Order Success Page", order);

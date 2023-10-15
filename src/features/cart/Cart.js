@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteItemsFromCartAsync,
-  fetchItemsByUserIdAsync,
+  fetchCartItemsAsync,
   selectCartItems,
   updateCartAsync,
 } from "./CartSlice";
 import { Link, Navigate } from "react-router-dom";
-import { selectLoggedInUser } from "../auth/authSlice";
+import { selectLoggedInUserToken } from "../auth/authSlice";
 import Modal from "../common/Modal";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUserToken);
 
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(-1);
@@ -34,20 +34,21 @@ export default function Cart() {
 
   const handleQuantity = (e, item) => {
     // e.preventDefault();
-    const userId = user.id;
+    // const userId = user.id;
 
     item = { ...item, quantity: +e.target.value };
     dispatch(updateCartAsync({ item }));
   };
 
   const handleDelete = (e, product) => {
-    const userId = user.id;
-    const itemId = product.id;
-    dispatch(deleteItemsFromCartAsync({ itemId, userId }));
+    // const userId = user.id;
+    console.log("handle Delete in Cart", product);
+    const productId = product.id;
+    dispatch(deleteItemsFromCartAsync(productId));
   };
 
   useEffect(() => {
-    dispatch(fetchItemsByUserIdAsync(user.id));
+    dispatch(fetchCartItemsAsync());
   }, [dispatch]);
 
   return (

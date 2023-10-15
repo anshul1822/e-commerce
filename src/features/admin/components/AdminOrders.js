@@ -81,7 +81,7 @@ const AdminOrders = () => {
                   >
                     Order No.
                   </th>
-                  <th className="py-3 px-1 text-left">Customer Name</th>
+                  {/* <th className="py-3 px-1 text-left">Customer Name</th> */}
                   <th className="py-3 px-1 text-left">Shipping Adrress</th>
                   <th className="py-3 px-1 text-left">Items</th>
                   <th className="py-3 px-1 text-center">Total</th>
@@ -221,11 +221,11 @@ const AdminOrders = () => {
                           <span className="font-medium">{order.id}</span>
                         </div>
                       </td>
-                      <td className="py-3 px-2 text-left">
+                      {/* <td className="py-3 px-2 text-left">
                         <div className="flex items-center">
                           <span>{order.user.name}</span>
                         </div>
-                      </td>
+                      </td> */}
                       <td className="py-3 px-1 text-left">
                         <div className="flex flex-col justify-center items-center">
                           <strong>{order.selectedAddress?.name}</strong>

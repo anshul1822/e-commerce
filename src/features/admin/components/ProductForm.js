@@ -59,10 +59,12 @@ export default function ProductForm() {
       product.id = params.id;
       product.rating = selectedProduct.rating || 0;
       dispatch(updateProductAsync(product));
+      alert.success("Item Updated Successfully");
       reset();
     } else {
       product.rating = 0;
       dispatch(createProductAsync(product));
+      alert.success("Item Added Successfully");
       reset();
     }
   };

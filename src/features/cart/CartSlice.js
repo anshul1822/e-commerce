@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addToCart, deleteItemsFromCart, fetchItemsByUserId,  updateCart, deleteCart} from './CartAPI';
+import { addToCart, deleteItemsFromCart, fetchCartItems,  updateCart, deleteCart} from './CartAPI';
 
 const initialState = {
   items: [],
@@ -34,9 +34,9 @@ export const updateCartAsync = createAsyncThunk(
 
 export const deleteItemsFromCartAsync = createAsyncThunk(
   'cart/deleteItemsFromCart',
-  async ({itemId, userId}) => {
+  async (productId) => {
     // console.log("deleteItemsFromCart", itemId, userId);
-    const response = await deleteItemsFromCart(itemId, userId);
+    const response = await deleteItemsFromCart(productId);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -44,18 +44,18 @@ export const deleteItemsFromCartAsync = createAsyncThunk(
 
 export const deleteCartAsync = createAsyncThunk(
   'cart/deleteCart',
-  async (userId) => {
+  async () => {
     //console.log("deleteCart", userId);
-    const response = await deleteCart(userId);
+    const response = await deleteCart();
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
 
-export const fetchItemsByUserIdAsync = createAsyncThunk(
-  'cart/fetchItemsByUserId',
-  async (userId) => {
-    const response = await fetchItemsByUserId(userId);
+export const fetchCartItemsAsync = createAsyncThunk(
+  'cart/fetchCartItems',
+  async () => {
+    const response = await fetchCartItems();
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -92,10 +92,10 @@ export const cartSlice = createSlice({
         state.status = 'idle';
         state.items.push(action.payload);
       })
-      .addCase(fetchItemsByUserIdAsync.pending, (state) => {
+      .addCase(fetchCartItemsAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchItemsByUserIdAsync.fulfilled, (state, action) => {
+      .addCase(fetchCartItemsAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.items = action.payload;
       })

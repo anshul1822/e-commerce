@@ -5,7 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 
 import {
   checkUserAsync,
-  selectLoggedInUser,
+  selectLoggedInUserToken,
   selectError,
 } from "../authSlice";
 
@@ -18,13 +18,13 @@ export function ForgotPassword() {
   } = useForm();
   const dispatch = useDispatch();
 
-  const user = useSelector(selectLoggedInUser);
+  const userToken = useSelector(selectLoggedInUserToken);
   const error = useSelector(selectError);
   
 
   return (
     <>
-    {user && <Navigate to='/' replace={true}></Navigate>}
+    {userToken && <Navigate to='/' replace={true}></Navigate>}
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser, checkUser, signOut } from './authAPI';
-import {updateUser} from '../user/userAPI';
+import { createUser, loginUser, signOut, checkAuth } from './authAPI';
+// import {updateUser} from '../user/userAPI';
 
 const initialState = {
-  loggedInUser : null,  // TODO : We want to store only id here, and move other details about user in userSlice
+  loggedInUserToken : null,  // TODO : We want to store only id here, and move other details about user in userSlice
   status: 'idle',
   error : null
 };
@@ -24,26 +24,43 @@ export const createUSerAsync = createAsyncThunk(
   }
 );
 
-export const updateUserAsync = createAsyncThunk(
-  'auth/updateUser',
-  async (update) => {
-    const response = await updateUser(update);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+// export const updateUserAsync = createAsyncThunk(
+//   'auth/updateUser',
+//   async (update) => {
+//     const response = await updateUser(update);
+//     // The value we return becomes the `fulfilled` action payload
+//     return response.data;
+//   }
+// );
 
-export const checkUserAsync = createAsyncThunk(
-  'auth/checkUser',
+export const loginUserAsync = createAsyncThunk(
+  'auth/loginUser',
   async (loginInfo, {rejectWithValue}) => {
 
     try{
-      const response = await checkUser(loginInfo);
+      const response = await loginUser(loginInfo);
+      // console.log('loginUser', response);
       // The value we return becomes the `fulfilled` action payload
       return response.data;
     }catch(err){
       // console.log(err);
       return rejectWithValue(err);
+    }
+  }
+);
+
+export const checkAuthAsync = createAsyncThunk(
+  'auth/checkAuth',
+  async () => {
+
+    try{
+      const response = await checkAuth();
+      // console.log('loginUser', response);
+      // The value we return becomes the `fulfilled` action payload
+      return response.data;
+    }catch(err){
+      console.log(err);
+      // return rejectWithValue(err);
     }
   }
 );
@@ -86,32 +103,43 @@ export const authSlice = createSlice({
       })
       .addCase(createUSerAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = action.payload;
+        state.loggedInUserToken = action.payload;
       })
-      .addCase(checkUserAsync.pending, (state) => {
+      .addCase(loginUserAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(checkUserAsync.fulfilled, (state, action) => {
+      .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = action.payload;
+        state.loggedInUserToken = action.payload;
       })
-      .addCase(checkUserAsync.rejected, (state, action) => {
+      .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'idle';
         state.error = action.payload;
       })
-      .addCase(updateUserAsync.pending, (state) => {
+      .addCase(checkAuthAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(updateUserAsync.fulfilled, (state, action) => {
+      .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = action.payload;        
+        state.loggedInUserToken = action.payload;
       })
+      // .addCase(checkAuthAsync.rejected, (state, action) => {
+      //   state.status = 'idle';
+      //   state.error = action.payload;
+      // })
+      // .addCase(updateUserAsync.pending, (state) => {
+      //   state.status = 'loading';
+      // })
+      // .addCase(updateUserAsync.fulfilled, (state, action) => {
+      //   state.status = 'idle';
+      //   state.loggedInUserToken = action.payload; 
+      // })
       .addCase(signOutAsync.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(signOutAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = null ;        
+        state.loggedInUserToken = null;
       });
 
   },
@@ -123,7 +151,7 @@ export const { increment, decrement, incrementByAmount } = authSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 // export const selectCount = (state) => state.counter.value;
-export const selectLoggedInUser = (state) => state.auth.loggedInUser;
+export const selectLoggedInUserToken = (state) => state.auth.loggedInUserToken;
 export const selectError = (state) => state.auth.error;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
@@ -132,6 +160,7 @@ export const selectError = (state) => state.auth.error;
 //   const currentValue = selectCount(getState());
 //   if (currentValue % 2 === 1) {
 //     dispatch(incrementByAmount(amount));
+
 //   }
 // };
 

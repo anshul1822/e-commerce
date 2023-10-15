@@ -6,11 +6,11 @@ import {
   selectLoggedInUserData,
   updateUserAsync,
 } from "../userSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
+import { selectLoggedInUserToken } from "../../auth/authSlice";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const userToken = useSelector(selectLoggedInUserToken);
 
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [addNewAddressFlag, setAddNewAddressFlag] = useState(false);
@@ -21,7 +21,7 @@ const UserProfile = () => {
   console.log("User Profile", userData);
 
   const handleEdit = (addressUpdate, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] }; //create a shallow copy
+    const newUser = { ...userData, addresses: [...userData.addresses] }; //create a shallow copy
     newUser.addresses.splice(selectedEditIndex, 1, addressUpdate);
 
     dispatch(updateUserAsync(newUser));
@@ -29,14 +29,14 @@ const UserProfile = () => {
   };
 
   const handleRemove = (index) => {
-    const newUser = { ...user, addresses: [...user.addresses] }; //create a shallow copy
+    const newUser = { ...userData, addresses: [...userData.addresses] }; //create a shallow copy
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
   };
 
   const handleEditForm = (index) => {
     setSelectedEditIndex(index);
-    const address = user.addresses[index];
+    const address = userData.addresses[index];
     setValue("name", address.name);
     setValue("email", address.email);
     setValue("street", address.street);
@@ -48,7 +48,7 @@ const UserProfile = () => {
   };
 
   const handleAdd = (data) => {
-    const newUser = { ...user, addresses: [...user.addresses, data] };
+    const newUser = { ...userData, addresses: [...userData.addresses, data] };
 
     dispatch(updateUserAsync(newUser));
     setAddNewAddressFlag(false);
@@ -64,7 +64,7 @@ const UserProfile = () => {
   } = useForm();
 
   useEffect(() => {
-    dispatch(fetchLoggedInUserDataAsync(user.id));
+    dispatch(fetchLoggedInUserDataAsync());
   }, []);
 
   return (
@@ -81,7 +81,7 @@ const UserProfile = () => {
           <h3 className="text-xl font-bold tracking-tight text-gray-900">
             Email : {userData.email}
           </h3>
-          {user.role === "admin" && (
+          {userData.role === "admin" && (
             <h3 className="text-xl font-bold tracking-tight text-gray-900">
               role : {userData.role}
             </h3>

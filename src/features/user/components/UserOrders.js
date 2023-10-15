@@ -4,15 +4,15 @@ import {
   fetchLoggedInUserOrdersAsync,
   selectLoggedInUserOrders,
 } from "../userSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
+import { selectLoggedInUserToken } from "../../auth/authSlice";
 
 const UserOrders = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUserToken);
   const orders = useSelector(selectLoggedInUserOrders);
 
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrdersAsync(user.id));
+    dispatch(fetchLoggedInUserOrdersAsync());
   }, [dispatch]);
 
   return (

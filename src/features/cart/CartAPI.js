@@ -29,27 +29,27 @@ export function updateCart(item) {
 });
 }
 
-export function deleteItemsFromCart(itemId, userId) {
+export function deleteItemsFromCart(productId) {
   return new Promise(async (resolve) => {
     // console.log("deleteItemsCart",itemId, userId);
     // console.log("deleteItemsFromCart", userId);
-    const response = await fetch(' http://localhost:8080/cart/'+itemId + '/' + userId,{
+    const response = await fetch(' http://localhost:8080/cart/'+productId,{
       method : 'DELETE',
       headers : {'content-type' : 'application/json'}
     })    
     const data = await response.json();
 
     // TODO : on server it will only retrun some info of user (not password)
-    resolve({data : {id : itemId}});
+    resolve({data : {id : productId}});
 });
 }
 
 
-export async function deleteCart(userId) {
+export async function deleteCart() {
   // get all the cart items - and then delete each item
 
   return new Promise(async (resolve) => {
-    const response = await fetchItemsByUserId(userId);
+    const response = await fetchCartItems();
     // console.log("deleteCart");
     // console.log(response.data);
     const items = response.data;
@@ -58,17 +58,17 @@ export async function deleteCart(userId) {
   
     for(let item of items){
       console.log(item);
-      await deleteItemsFromCart(item.product.id, userId);
+      await deleteItemsFromCart(item.product.id);
     }
 
     resolve({status : 'success'});
 });
 }
 
-export function fetchItemsByUserId(userId) {
+export function fetchCartItems() {
   return new Promise(async (resolve) => {
     //TODO : we will not hard-code server url her
-    const response = await fetch(' http://localhost:8080/cart?user=' + userId)    
+    const response = await fetch(' http://localhost:8080/cart');    
     const data = await response.json();
     console.log("fetch Items in Cart Cart API ", data);
     resolve({data});

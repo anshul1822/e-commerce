@@ -15,9 +15,9 @@ export function createUser(userData) {
 
 
 
-export function checkUser(loginInfo) {
+export function loginUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
-
+    // console.log("loginUser", loginInfo);
     try{
       const response = await fetch(`http://localhost:8080/auth/login`, {
         method : 'POST',
@@ -25,12 +25,15 @@ export function checkUser(loginInfo) {
         headers : {'content-type' : 'application/json'}
       });
 
+      console.log("response", response);
+
       if(response.ok){
         const data = await response.json();
+        // console.log("response.ok", data);
         resolve({data});  
       }else{
-        const error = await response.json();
-        console.log(error);
+        const error = await response.text();
+        // console.log("response.error", error);
         reject(error);
       }
     
@@ -41,6 +44,28 @@ export function checkUser(loginInfo) {
     // TODO : on server it will only retrun some info of user (not password)  
 });
 }
+
+export function checkAuth() {
+  return new Promise(async (resolve, reject) => {
+    try{
+      const response = await fetch(' http://localhost:8080/auth/check');  
+
+      if(response.ok){
+        const data = await response.json();
+        // console.log("response.ok", data);
+        resolve({data});  
+      }else{
+        const error = await response.text();
+        // console.log("response.error", error);
+        reject(error);
+      }
+
+    }catch(err){
+      console.log('error at checkAuth', err);
+    }
+});
+}
+
 
 export function signOut(userId) {
   return new Promise(async (resolve) => {

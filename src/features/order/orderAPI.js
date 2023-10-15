@@ -42,7 +42,7 @@ export function fetchAllOrders(sort, pagination) {
 
     console.log(queryString);
 
-      const response = await fetch("http://localhost:8080/orders?" + queryString);
+      const response = await fetch("http://localhost:8080/orders/all-orders?" + queryString);
       const data = await response.json();
   
       const totalOrders = await response.headers.get('X-Total-Count'); //json-server API gives total count

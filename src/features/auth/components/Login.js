@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
 import {
-  checkUserAsync,
-  selectLoggedInUser,
+  loginUserAsync,
+  selectLoggedInUserToken,
   selectError,
 } from "../authSlice";
 import logo from '../../../assets/logo.png';
@@ -21,7 +21,7 @@ export function Login() {
   const [incrementAmount, setIncrementAmount] = useState("2");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const user = useSelector(selectLoggedInUser);
+  const userToken = useSelector(selectLoggedInUserToken);
   const error = useSelector(selectError);
   // console.log("error", error);
   
@@ -29,7 +29,7 @@ export function Login() {
   return (
     <>
     {/* {console.log("user", user)} */}
-    {user && <Navigate to='/' replace={true}></Navigate>}
+    {userToken && <Navigate to='/' replace={true}></Navigate>}
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
@@ -49,7 +49,7 @@ export function Login() {
           onSubmit={handleSubmit((data) => {
             console.log(data);
             dispatch(
-              checkUserAsync({ email: data.email, password: data.password })
+              loginUserAsync({ email: data.email, password: data.password })
             );
           })}
         >
@@ -117,7 +117,7 @@ export function Login() {
                 <p className="text-red-400">{errors.password.message}</p>
               )}
               {error && (
-                <p className="text-red-400">{error.message}</p>
+                <p className="text-red-400">{error || error.message}</p>
               )}
             </div>
           </div>

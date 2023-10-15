@@ -18,8 +18,9 @@ import Checkout from './pages/Checkout';
 import ProductDetailPage from './pages/ProductDetailPage';
 import Protected from './features/auth/components/Protected';
 import { fetchItemsByUserId } from './features/cart/CartAPI';
-import { selectLoggedInUser } from './features/auth/authSlice';
-import { fetchItemsByUserIdAsync } from './features/cart/CartSlice';
+import { checkAuthAsync, selectLoggedInUserToken } from './features/auth/authSlice';
+import { fetchLoggedInUserDataAsync } from './features/user/userSlice';
+import { fetchCartItemsAsync } from './features/cart/CartSlice';
 import PageNotFound from './pages/PageNotFound';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import UserOrderPage from './pages/UserOrderPage';
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
     element: <Protected><OrderSuccessPage/></Protected>,
   },
   {
-    path: "/orders",
+    path: "/my-orders",
     element: <Protected><UserOrderPage/></Protected>,
   },
   {
@@ -111,16 +112,22 @@ const options = {
 function App() {
 
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const userToken = useSelector(selectLoggedInUserToken);
+
+  useEffect(()=> {
+    dispatch(checkAuthAsync());
+  },[dispatch])
 
   useEffect(()=>{    
     
-    if(user){
+    if(userToken){
       // console.log("user.id", user?.id);
-      dispatch(fetchItemsByUserIdAsync(user.id));
+      dispatch(fetchCartItemsAsync());
+      //we can get req.user by token of backend so no need to give in front-end
+      dispatch(fetchLoggedInUserDataAsync());
     } //only dispatch if the user is logged in.
 
-  },[dispatch, user]);
+  },[dispatch, userToken]);
 
   return (
     <div className="App">

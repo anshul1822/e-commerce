@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { selectCartItems, updateCartAsync, deleteCartAsync, fetchItemsByUserIdAsync } from "../features/cart/CartSlice";
-import { selectLoggedInUser, updateUserAsync } from "../features/auth/authSlice";
+import { selectCartItems, updateCartAsync, deleteCartAsync, fetchCartItemsAsync } from "../features/cart/CartSlice";
+import { selectLoggedInUserToken } from "../features/auth/authSlice";
 import { addToOrderAsync, selectCurrentOrder } from "../features/order/orderSlice";
-import { selectLoggedInUserData } from "../features/user/userSlice";
+import { updateUserAsync, fetchLoggedInUserDataAsync, selectLoggedInUserData } from "../features/user/userSlice";
 
 const products = [
   {
@@ -96,9 +96,11 @@ function Checkout() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   // console.log("cartItems at checkout page", cartItems);
-  const user = useSelector(selectLoggedInUser);
+  const userToken = useSelector(selectLoggedInUserToken);
   // console.log("user at checkout page", user);
   const currentOrder = useSelector(selectCurrentOrder);
+
+  const userData = useSelector(selectLoggedInUserData);
 
   console.log("currentOrder at checkout", currentOrder);
 
@@ -107,7 +109,7 @@ function Checkout() {
 
   const handleQuantity = (e, item) => {
     // e.preventDefault();
-    dispatch(updateCartAsync({item : item.id, quantity : +e.target.value}));
+    dispatch(updateCartAsync({...item , quantity : +e.target.value}));
   }
 
   const handleDelete = (e, itemId) => {
@@ -115,8 +117,8 @@ function Checkout() {
   }
 
   const handleAddress = (e) =>{
-    console.log(user.addresses[e.target.value]);
-    setSelectedAddress(user.addresses[e.target.value]);
+    console.log(userData.addresses[e.target.value]);
+    setSelectedAddress(userData.addresses[e.target.value]);
   }
 
   const handlePayment = (e) => {
@@ -126,8 +128,8 @@ function Checkout() {
   const handleOrder = (e) => {
     if(selectedAddress){
       // console.log(cartItems);
-      const userId = user.id;
-      const order = {items : cartItems  , totalItems, totalAmount, user : userId, paymentMethod, selectedAddress, status : 'pending'}; //other can be delivered received
+      // const userId = user.id;
+      const order = {items : cartItems  , totalItems, totalAmount, paymentMethod, selectedAddress, status : 'pending'}; //other can be delivered received
       dispatch(addToOrderAsync(order));
     }
   else{
@@ -142,7 +144,7 @@ function Checkout() {
 
   useEffect(()=>{
     console.log("Checkout");
-    dispatch(fetchItemsByUserIdAsync(user.id))
+    dispatch(fetchCartItemsAsync())
     // selectedAddress(user.addresses[0])
   },[dispatch])
 
@@ -168,13 +170,12 @@ function Checkout() {
           <form
             noValidate
             onSubmit={handleSubmit((data) => {
-              //console.log(data);
+              console.log(data);
               console.log("selected Address: ", selectedAddress);
-                dispatch(
-                  updateUserAsync({...user, addresses : [...user.addresses, data] })
-                );  
-                reset();
-              
+              const newUser = {...userData, addresses : [...userData.addresses, data]};
+                dispatch(updateUserAsync(newUser));
+                dispatch(fetchLoggedInUserDataAsync());
+                reset();              
             })}
           > 
             <h2 className="text-2xl font-semibold leading-7 text-gry-900">Personal Information</h2>
@@ -200,6 +201,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.name && (
+  <span className="text-red-500">{errors.name.message}</span>
+)}
             </div>
 
 
@@ -225,6 +229,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.email && (
+  <span className="text-red-500">{errors.email.message}</span>
+)}
             </div>
 
             <div className="sm:col-span-3">
@@ -244,6 +251,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.phone && (
+  <span className="text-red-500">{errors.phone.message}</span>
+)}
             </div>
 
             <div className="col-span-full">
@@ -262,6 +272,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.street && (
+  <span className="text-red-500">{errors.street.message}</span>
+)}
 
             </div>
 
@@ -281,6 +294,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.city && (
+  <span className="text-red-500">{errors.city.message}</span>
+)}
             </div>
 
             <div className="sm:col-span-2">
@@ -299,6 +315,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.state && (
+  <span className="text-red-500">{errors.state.message}</span>
+)}
             </div>
 
             <div className="sm:col-span-2">
@@ -317,6 +336,9 @@ function Checkout() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.pinCode && (
+  <span className="text-red-500">{errors.pinCode.message}</span>
+)}
             </div>
             
           </div>
@@ -387,7 +409,7 @@ function Checkout() {
                       )}
                     </div>
                   </li>                 */}
-                {user?.addresses?.map((person, index) => (
+                {userData?.addresses?.map((person, index) => (
                   <li
                     key={person.email}
                     className="flex justify-between gap-x-6 py-5"

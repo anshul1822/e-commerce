@@ -4,8 +4,8 @@ import { RadioGroup } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByIdAsync, selectProductById } from '../ProductSlice';
 import { useParams } from 'react-router-dom';
-import { addToCartAsync, fetchItemsByUserIdAsync, selectCartItems } from '../../cart/CartSlice';
-import { selectLoggedInUser } from '../../auth/authSlice';
+import { addToCartAsync, fetchCartItemsAsync, selectCartItems } from '../../cart/CartSlice';
+import { selectLoggedInUserToken } from '../../auth/authSlice';
 import { useAlert } from "react-alert";
 
 // const product = {
@@ -80,7 +80,7 @@ export default function ProductDetail() {
 
   const product = useSelector(selectProductById);
   // console.log("product details product", product);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUserToken);
   const cartItems = useSelector(selectCartItems);
   console.log("product details cartItems", cartItems);
   // console.log(user);
@@ -98,11 +98,11 @@ export default function ProductDetail() {
     setIsAddingToCart(true);
 
     if(cartItems.findIndex(cartItem => cartItem.product?.id == product.id) < 0){
-      const newItem = {product : product.id, quantity:1, user:user.id};
+      const newItem = {product : product.id, quantity:1};
       console.log("newItem at Product Details", newItem);
       dispatch(addToCartAsync(newItem));
       console.log("Product Detail");
-      dispatch(fetchItemsByUserIdAsync(user.id));
+      dispatch(fetchCartItemsAsync());
       setIsAddingToCart(false);
 
       //TODO : it will be based on server response of backend      

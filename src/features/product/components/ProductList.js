@@ -25,7 +25,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ITEMS_PER_APGE } from "../../../app/constants";
-import { InfinitySpin } from  'react-loader-spinner'
+import { Oval } from  'react-loader-spinner'
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -451,10 +451,19 @@ function ProductGrid({ products, status }) {
             Customers also purchased
           </h2>
           {
-        status === 'loading' ?       <InfinitySpin 
-        width='200'
+        status === 'loading' ?  <div className="my-5 mx-auto flex justify-center items-center"> <Oval
+        height={200}
+        width={200}
         color="#4fa94d"
-      /> : null
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel='oval-loading'
+        secondaryColor="#4fa94d"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+      
+      /></div> : null
       }
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (

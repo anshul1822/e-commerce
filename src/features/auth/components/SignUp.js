@@ -9,7 +9,7 @@ import {
   incrementByAmount,
   incrementAsync,
   createUSerAsync,
-  selectLoggedInUser,
+  selectLoggedInUserToken,
 } from "../authSlice";
 
 export function SignUp() {
@@ -24,14 +24,14 @@ export function SignUp() {
   const [incrementAmount, setIncrementAmount] = useState("2");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUserToken);
   // const incrementValue = Number(incrementAmount) || 0;
 
   return (
     <>
       {user && <Navigate to="/" replace={true}></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        {user?.email}
+        {/* {user?.email} */}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-20 w-20"

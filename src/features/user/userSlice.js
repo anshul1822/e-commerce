@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchLoggedInUserData, fetchLoggedInUserOrders, updateUser } from './userAPI';
 
 const initialState = {
-  userData : {},
+  userData : null,
   userOrders : null,
   status: 'idle',
   
@@ -25,8 +25,8 @@ const initialState = {
 
 export const fetchLoggedInUserDataAsync = createAsyncThunk(
   'user/fetchLoggedInUser',
-  async (id) => {
-    const response = await fetchLoggedInUserData(id);
+  async () => {
+    const response = await fetchLoggedInUserData();
     // The value we return becomes the `fulfilled` action payload
     // console.log(response.data);
     return response.data;
@@ -35,9 +35,9 @@ export const fetchLoggedInUserDataAsync = createAsyncThunk(
 
 export const fetchLoggedInUserOrdersAsync = createAsyncThunk(
   'user/fetchLoggedInUserOrders',
-  async (id) => {
-    console.log("fetchLoggedInUserOrders user", id);
-    const response = await fetchLoggedInUserOrders(id);
+  async () => {
+    // console.log("fetchLoggedInUserOrders user", id);
+    const response = await fetchLoggedInUserOrders();
     // The value we return becomes the `fulfilled` action payload
     // console.log(response.data);
     return response.data;
