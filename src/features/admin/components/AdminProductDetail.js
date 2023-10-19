@@ -4,7 +4,7 @@ import { RadioGroup } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByIdAsync, selectProductById } from '../../product/ProductSlice';
 import { useParams } from 'react-router-dom';
-import { addToCartAsync } from '../../cart/CartSlice';
+import { addToCartAsync, selectCartStatus, selectCartItems, fetchCartItemsAsync } from '../../cart/CartSlice';
 import { selectLoggedInUserToken } from '../../auth/authSlice';
 
 
@@ -45,16 +45,46 @@ export default function AdminProductDetail() {
 
   const product = useSelector(selectProductById);
   const user = useSelector(selectLoggedInUserToken);
+  const cartItems = useSelector(selectCartItems);
+  const cartState = useSelector(selectCartStatus);
   // console.log(user);
 
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
 
-  const handleCart = (e) => {
+  // const handleCart = (e) => {
+  //   e.preventDefault();
+  //   const newItem = {...product, quantity:1};
+  //   delete newItem['id'];
+  //   dispatch(addToCartAsync(newItem));
+  // }
+
+  const handleCart = async(e) => {
     e.preventDefault();
-    const newItem = {...product, quantity:1};
-    delete newItem['id'];
-    dispatch(addToCartAsync(newItem));
+
+    //to prevent multiple clicks
+    if(cartState == false)  alert.success("Please Wait! Item is Being Added");
+
+    // setIsAddingToCart(true);
+
+    else if(cartState && cartItems.findIndex(cartItem => cartItem.product?.id == product.id) < 0){
+      const newItem = {product : product.id, quantity:1};
+      // console.log("newItem at Product Details", newItem);
+      dispatch(addToCartAsync(newItem));
+      // console.log("Product Detail");
+      dispatch(fetchCartItemsAsync());
+      // setIsAddingToCart(false);
+
+      //TODO : it will be based on server response of backend      
+      alert.success("Item Added Successfully");
+    }else{
+      // console.log('product already added');
+      alert.info("Item already added");
+      // setIsAddingToCart(false);
+    }
+    // const newItem = {...product, quantity:1, user:user.id};
+    // delete newItem['id'];
+    // dispatch(addToCartAsync(newItem));
   }
 
   useEffect(()=>{
@@ -142,7 +172,25 @@ export default function AdminProductDetail() {
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">${product.price}</p>
+            <p className="text-3xl tracking-tight text-gray-900"> 
+            <div>
+                      <p className="font-medium text-gray-400 line-through">
+                        ${product.price}
+                      </p>
+
+                      <p className="text-lg font-medium text-purple-800 text-right">
+                      {`${product.discountPercentage} % Discount !!!`}
+                      </p>
+
+                      <p className="font-medium text-gray-900">
+                        $
+                        {Math.round(
+                          product.price * (1 - product.discountPercentage / 100)
+                        )}
+                      </p>
+
+              </div>
+              </p>
 
             {/* Reviews */}
             <div className="mt-6">
@@ -167,7 +215,7 @@ export default function AdminProductDetail() {
 
             <form className="mt-10">
               {/* Colors */}
-              <div>
+              {/* <div>
                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
@@ -200,10 +248,10 @@ export default function AdminProductDetail() {
                     ))}
                   </div>
                 </RadioGroup>
-              </div>
+              </div> */}
 
               {/* Sizes */}
-              <div className="mt-10">
+              {/* <div className="mt-10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-900">Size</h3>
                   <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -262,7 +310,7 @@ export default function AdminProductDetail() {
                     ))}
                   </div>
                 </RadioGroup>
-              </div>
+              </div> */}
 
               <button
                 onClick={handleCart}

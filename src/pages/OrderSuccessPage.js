@@ -24,7 +24,7 @@ const OrderSuccessPage = () => {
 
     //clear the cart
     dispatch(deleteCartAsync());
-  }, []);
+  }, [dispatch]);
 
   // console.log("Order Success Page", order);
 

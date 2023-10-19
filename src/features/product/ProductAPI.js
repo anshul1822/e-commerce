@@ -2,7 +2,7 @@
 export function fetchAllProducts() {
   return new Promise(async (resolve) => {
     // TODO : Server will filter the deleted products
-    const response = await fetch("http://localhost:8080/products");
+    const response = await fetch("/products");
     const data = await response.json();
 
     resolve({data});
@@ -12,7 +12,7 @@ export function fetchAllProducts() {
 export function fetchProductsById(id) {
   // console.log(id, "id");
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/products/"+id);
+    const response = await fetch("/products/"+id);
     const data = await response.json();
     // console.log(data);
     resolve({data});
@@ -22,7 +22,7 @@ export function fetchProductsById(id) {
 export function createProduct(product) {
   return new Promise(async (resolve) => {
     console.log(product);
-    const response = await fetch(' http://localhost:8080/products', {
+    const response = await fetch(' /products', {
       method : 'POST',
       body : JSON.stringify(product),
       headers : {'content-type' : 'application/json'}
@@ -37,7 +37,7 @@ export function createProduct(product) {
 export function updateProduct(product) {
   return new Promise(async (resolve) => {
 
-    const response = await fetch(' http://localhost:8080/products/' + product.id, {
+    const response = await fetch(' /products/' + product.id, {
       method : 'PUT',
       body : JSON.stringify(product),
       headers : {'content-type' : 'application/json'}
@@ -76,7 +76,7 @@ export function fetchProductsByFilter(filter, sort, pagination) {
 
   console.log(queryString);
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/products?" + queryString);
+    const response = await fetch("/products?" + queryString);
     const data = await response.json();
 
     const totalItems = await response.headers.get('X-Total-Count'); //json-server API gives total count
@@ -86,7 +86,7 @@ export function fetchProductsByFilter(filter, sort, pagination) {
 
 export function fetchAllBrands() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/brands");
+    const response = await fetch("/brands");
     const data = await response.json();
 
     resolve({data});
@@ -95,7 +95,7 @@ export function fetchAllBrands() {
 
 export function fetchAllCategories() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/categories");
+    const response = await fetch("/categories");
     const data = await response.json();
     // console.log(data);
     resolve({data});

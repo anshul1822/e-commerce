@@ -2,7 +2,7 @@
 export function addToCart(cartItems) {
   return new Promise(async (resolve) => {
 
-    const response = await fetch(' http://localhost:8080/cart', {
+    const response = await fetch(' /cart', {
       method : 'POST',
       body : JSON.stringify(cartItems),
       headers : {'content-type' : 'application/json'}
@@ -17,7 +17,7 @@ export function addToCart(cartItems) {
 export function updateCart(item) {
   return new Promise(async (resolve) => {
     // console.log("updateCart",item);
-    const response = await fetch(' http://localhost:8080/cart/'+item.id,{
+    const response = await fetch(' /cart/'+item.id,{
       method : 'PUT',
       body : JSON.stringify(item),
       headers : {'content-type' : 'application/json'}
@@ -33,7 +33,7 @@ export function deleteItemsFromCart(productId) {
   return new Promise(async (resolve) => {
     // console.log("deleteItemsCart",itemId, userId);
     // console.log("deleteItemsFromCart", userId);
-    const response = await fetch(' http://localhost:8080/cart/'+productId,{
+    const response = await fetch(' /cart/'+productId,{
       method : 'DELETE',
       headers : {'content-type' : 'application/json'}
     })    
@@ -68,7 +68,7 @@ export async function deleteCart() {
 export function fetchCartItems() {
   return new Promise(async (resolve) => {
     //TODO : we will not hard-code server url her
-    const response = await fetch(' http://localhost:8080/cart');    
+    const response = await fetch(' /cart');    
     const data = await response.json();
     console.log("fetch Items in Cart Cart API ", data);
     resolve({data});

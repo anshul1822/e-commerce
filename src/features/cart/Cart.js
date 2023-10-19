@@ -4,6 +4,7 @@ import {
   deleteItemsFromCartAsync,
   fetchCartItemsAsync,
   selectCartItems,
+  selectCartStatus,
   updateCartAsync,
 } from "./CartSlice";
 import { Link, Navigate } from "react-router-dom";
@@ -13,6 +14,7 @@ import Modal from "../common/Modal";
 export default function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
+  const cartState = useSelector(selectCartStatus)
   const user = useSelector(selectLoggedInUserToken);
 
   const [open, setOpen] = useState(false);
@@ -21,14 +23,15 @@ export default function Cart() {
   const totalAmount = cartItems.reduce(
     (amount, item) =>
       Math.round(
-        item.product.price * (1 - item.product.discountPercentage / 100)
+        item?.product?.price * (1 - item?.product?.discountPercentage / 100)
       ) *
-        item.quantity +
+        item?.quantity +
       amount,
     0
   );
+  
   const totalItems = cartItems.reduce(
-    (amount, item) => item.quantity + amount,
+    (amount, item) => item?.quantity + amount,
     0
   );
 
@@ -45,6 +48,7 @@ export default function Cart() {
     console.log("handle Delete in Cart", product);
     const productId = product.id;
     dispatch(deleteItemsFromCartAsync(productId));
+    dispatch(fetchCartItemsAsync());
   };
 
   useEffect(() => {
@@ -64,11 +68,13 @@ export default function Cart() {
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
                 {cartItems.map((product) => (
-                  <li key={product.product.id} className="flex py-6 my-4">
+                  product?.product && 
+                  <>
+                                      <li key={product.product?.id} className="flex py-6 my-4">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
-                        src={product.product.thumbnail}
-                        alt={product.product.title}
+                        src={product.product?.thumbnail}
+                        alt={product.product?.title}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -82,26 +88,26 @@ export default function Cart() {
                           <span>
                             {" "}
                             <p className="text-sm font-medium text-gray-400 line-through">
-                              ${product.product.price}
+                              ${product.product?.price}
                             </p>
                             <p className="text-sm font-medium text-gray-900">
                               $
                               {Math.round(
-                                product.product.price *
-                                  (1 - product.product.discountPercentage / 100)
+                                product.product?.price *
+                                  (1 - product.product?.discountPercentage / 100)
                               )}
                             </p>
                           </span>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {product.product.color}
+                          {product.product?.color}
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="flex w-32 items-center justify-between text-gray-500 ">
                           Qty:{" "}
                           <select
-                            value={product.quantity}
+                            value={product?.quantity}
                             onChange={(e) => handleQuantity(e, product)}
                             className="!appearance-none  w-20 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
@@ -114,13 +120,13 @@ export default function Cart() {
                         </div>
 
                         <Modal
-                          title={`Delete Cart Item ${product.product.title}`}
-                          message={`Are you sure you want to delete ${product.product.title} ?`}
+                          title={`Delete Cart Item ${product.product?.title}`}
+                          message={`Are you sure you want to delete ${product.product?.title} ?`}
                           dangerOption="Delete"
                           cancelOption="Cancel"
                           cancelAction={() => setShowModal(-1)}
-                          dangerAction={(e) => handleDelete(e, product.product)}
-                          showModal={showModal === product.product.id}
+                          dangerAction={(e) => handleDelete(e, product?.product)}
+                          showModal={showModal === product.product?.id}
                         />
                         <div className="flex">
                           <button
@@ -134,6 +140,7 @@ export default function Cart() {
                       </div>
                     </div>
                   </li>
+                  </>
                 ))}
               </ul>
             </div>

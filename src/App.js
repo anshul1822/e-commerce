@@ -32,6 +32,8 @@ import AdminProductDetailPage from './pages/AdminProductDetailPage'
 import ProtectedAdmin from './features/auth/components/ProtectedAdmin';
 import AdminProductFormPage from './pages/AdminProductFormPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
+import CheckoutForm from './pages/CheckoutForm';
+import StripeCheckout from './pages/StripeCheckout';
 
 const router = createBrowserRouter([
   {
@@ -89,6 +91,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Protected><UserProfilePage/></Protected>,
+  },
+  {
+    path: "/stripe-checkout",
+    element: <Protected> <StripeCheckout/> </Protected>,
   },
   {
     path: "/logout",

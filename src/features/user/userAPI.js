@@ -2,7 +2,7 @@ export function fetchLoggedInUserData(){
 
     return new Promise(async(resolve) => {
 
-        const response = await fetch('http://localhost:8080/users/my-profile')
+        const response = await fetch('/users/my-profile')
         const data = await response.json();
 
         resolve({data});
@@ -15,7 +15,7 @@ export function fetchLoggedInUserOrders(){
         
         // console.log("fetchLoggedInUserOrders user");
 
-        const response = await fetch('http://localhost:8080/orders/')
+        const response = await fetch('/orders/')
         const data = await response.json();
 
         resolve({data});
@@ -25,7 +25,7 @@ export function fetchLoggedInUserOrders(){
 export function updateUser(update) {
     return new Promise(async (resolve) => {
       console.log(update);
-      const response = await fetch(' http://localhost:8080/users/my-profile' , {
+      const response = await fetch(' /users/my-profile' , {
         method : 'PUT',
         body : JSON.stringify(update),
         headers : {'content-type' : 'application/json'}

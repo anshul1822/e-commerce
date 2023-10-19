@@ -288,7 +288,7 @@ function MobileFilter({
                 {/* Filters */}
                 <form className="mt-4 border-t border-gray-200">
                   <h3 className="sr-only">Categories</h3>
-                  <ul
+                  {/* <ul
                     role="list"
                     className="px-2 py-3 font-medium text-gray-900"
                   >
@@ -299,7 +299,7 @@ function MobileFilter({
                         </a>
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
 
                   {filters.map((section) => (
                     <Disclosure
@@ -377,7 +377,7 @@ function DesktopFilter({ subCategories, handleFilter, filters }) {
       {" "}
       <form className="hidden lg:block">
         <h3 className="sr-only">Categories</h3>
-        <ul
+        {/* <ul
           role="list"
           className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
         >
@@ -386,7 +386,7 @@ function DesktopFilter({ subCategories, handleFilter, filters }) {
               <a href={category.href}>{category.name}</a>
             </li>
           ))}
-        </ul>
+        </ul> */}
 
         {filters.map((section) => (
           <Disclosure

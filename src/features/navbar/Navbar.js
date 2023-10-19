@@ -8,15 +8,15 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../cart/CartSlice";
-import { selectLoggedInUserToken, selectLoggedInUserRole } from "../auth/authSlice";
+import { selectLoggedInUserToken } from "../auth/authSlice";
 import logo from '../../assets/logo.png';
 import { selectLoggedInUserData } from "../user/userSlice";
 
 
 const navigation = [
   { name: "Products", link: "/", user : true },
-  { name: "Products", link: "/admin",  admin : true },
-  { name: "Orders", link: "/admin/orders",  admin : true },
+  { name: "Admin Products", link: "/admin",  admin : true },
+  { name: "Admin Orders", link: "/admin/orders",  admin : true },
 ];
 const userNavigation = [
   { name: "Your Profile", link: "/profile" },
@@ -44,6 +44,7 @@ export default function NavBar({ children }) {
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
+                    
                     <Link to="/">
                       <img
                         className="h-12 w-12"
@@ -55,9 +56,9 @@ export default function NavBar({ children }) {
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item, idx) => {
-                        console.log("items", idx, item);
-                        console.log("userData?.role", userData?.role);
-                        console.log("item[userData?.role]", item[userData?.role]);
+                        // console.log("items", idx, item);
+                        // console.log("userData?.role", userData?.role);
+                        // console.log("item[userData?.role]", item[userData?.role]);
 return (item[userData?.role] ? <Link
                       
 key={item.name}
